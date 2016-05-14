@@ -1,7 +1,8 @@
-from __future__ import division
+
 from menpo.transform import AlignmentSimilarity, Similarity
 import numpy as np
 from menpo.visualize import progress_bar_str, print_dynamic
+import collections
 
 
 def name_of_callable(c):
@@ -17,7 +18,7 @@ def is_pyramid_on_features(features):
     is taken. False if a gaussian pyramid is taken and then features are
     extracted at each level.
     """
-    return callable(features)
+    return isinstance(features, collections.Callable)
 
 
 def create_pyramid(images, n_levels, downscale, features, verbose=False):

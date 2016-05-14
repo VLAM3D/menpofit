@@ -1,5 +1,5 @@
-import urllib2
-import cStringIO
+import urllib.request, urllib.error, urllib.parse
+import io
 import os
 import scipy.io as sio
 import glob
@@ -33,21 +33,21 @@ def download_ibug_bounding_boxes(path=None, verbose=False):
     if verbose:
         print('Acquiring bounding box information from iBUG website...')
     try:
-        remotezip = urllib2.urlopen(bboxes_url)
-        zipinmemory = cStringIO.StringIO(remotezip.read())
+        remotezip = urllib.request.urlopen(bboxes_url)
+        zipinmemory = io.StringIO(remotezip.read())
         ziplocal = zipfile.ZipFile(zipinmemory)
     except Exception as e:
         print('Unable to grab bounding boxes (are you online?)')
         raise e
     if verbose:
-        print('Extracting to {}'.format(os.path.join(path, 'Bounding Boxes')))
+        print(('Extracting to {}'.format(os.path.join(path, 'Bounding Boxes'))))
     try:
         ziplocal.extractall(path=path)
         if verbose:
             print('Done.')
     except Exception as e:
         if verbose:
-            print('Unable to save.'.format(e))
+            print(('Unable to save.'.format(e)))
         raise e
 
 
@@ -98,7 +98,7 @@ def import_all_bounding_boxes(boxes_dir_path=None, verbose=True):
     for bbox_path in bbox_paths:
         db = os.path.splitext(os.path.split(bbox_path)[-1])[0][len(prefix):]
         if verbose:
-            print('Importing {}'.format(db))
+            print(('Importing {}'.format(db)))
         bboxes[db] = import_bounding_boxes(bbox_path)
     if verbose:
         print('Cleaning up...')

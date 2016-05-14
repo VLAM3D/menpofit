@@ -1,4 +1,4 @@
-from __future__ import division
+
 from itertools import chain
 
 from menpofit.base import name_of_callable

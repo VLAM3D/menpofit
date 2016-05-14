@@ -566,13 +566,13 @@ def aam_params_combinations_noise(training_db_path, fitting_db_path,
     all_fitting_results = []
     for i in range(n_experiments):
         if verbose:
-            print("\nEXPERIMENT {}/{}:".format(i + 1, n_experiments))
-            print("- features: {}\n- scaled_shape_models: {}\n"
+            print(("\nEXPERIMENT {}/{}:".format(i + 1, n_experiments)))
+            print(("- features: {}\n- scaled_shape_models: {}\n"
                   "- n_shape: {}\n"
                   "- n_appearance: {}\n- noise_std: {}\n"
                   "- rotation: {}".format(
                   features[i], scaled_shape_models[i],
-                  n_shape[i], n_appearance[i], noise_std[i], rotation[i]))
+                  n_shape[i], n_appearance[i], noise_std[i], rotation[i])))
 
         # predefined option dictionaries
         error_type = 'me_norm'
@@ -692,14 +692,14 @@ def clm_params_combinations_noise(training_db_path, fitting_db_path,
     all_fitting_results = []
     for i in range(n_experiments):
         if verbose:
-            print("\nEXPERIMENT {}/{}:".format(i + 1, n_experiments))
-            print("- classifiers: {}\n- patch_shape: {}\n"
+            print(("\nEXPERIMENT {}/{}:".format(i + 1, n_experiments)))
+            print(("- classifiers: {}\n- patch_shape: {}\n"
                   "- features: {}\n- scaled_shape_models: {}\n"
                   "- n_shape: {}\n"
                   "- noise_std: {}\n- rotation: {}".format(
                   classifiers[i], patch_shape[i], features[i],
                   scaled_shape_models[i], n_shape[i],
-                  noise_std[i], rotation[i]))
+                  noise_std[i], rotation[i])))
 
         # predefined option dictionaries
         error_type = 'me_norm'

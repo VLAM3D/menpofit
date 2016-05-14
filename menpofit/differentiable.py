@@ -1,14 +1,13 @@
 import abc
 
 
-class DP(object):
+class DP(object, metaclass=abc.ABCMeta):
     r"""Object that is able to take it's own derivative wrt parametrization.
 
     The parametrization of objects is typically defined by the
     :map:`Vectorizable` interface. As a result, :map:`DP` is a mix-in that
     should be inherited along with :map:`Vectorizable`.
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def d_dp(self, points):
@@ -31,10 +30,9 @@ class DP(object):
         """
 
 
-class DX(object):
+class DX(object, metaclass=abc.ABCMeta):
     r"""Object that is able to take it's own derivative wrt spatial changes.
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def d_dx(self, points):
@@ -61,10 +59,9 @@ class DX(object):
         """
 
 
-class DL(object):
+class DL(object, metaclass=abc.ABCMeta):
     r"""Object that is able to take it's own derivative wrt landmark changes.
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def d_dl(self, points):

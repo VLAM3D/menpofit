@@ -1,10 +1,9 @@
 import abc
 
 
-class Residual(object):
+class Residual(object, metaclass=abc.ABCMeta):
     r"""
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractproperty
     def error(self):

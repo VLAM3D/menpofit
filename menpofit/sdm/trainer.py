@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+
 import abc
 import numpy as np
 from menpo.transform import Scale
@@ -86,7 +86,7 @@ def apply_pyramid_on_images(generators, n_levels, verbose=False):
     return all_images
 
 
-class SDTrainer(DeformableModel):
+class SDTrainer(DeformableModel, metaclass=abc.ABCMeta):
     r"""
     Mixin for Supervised Descent Trainers.
 
@@ -163,7 +163,6 @@ class SDTrainer(DeformableModel):
         ``features`` must be a `string` or a `function` or a list of those
         containing ``1`` or ``n_levels`` elements
     """
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, regression_type=mlr, regression_features=None,
                  features=no_op, n_levels=3, downscale=1.2, noise_std=0.04,

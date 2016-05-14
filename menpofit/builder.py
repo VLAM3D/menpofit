@@ -1,4 +1,4 @@
-from __future__ import division
+
 import abc
 import numpy as np
 from menpo.shape import mean_pointcloud
@@ -152,11 +152,10 @@ def build_shape_model(shapes, max_components):
     return shape_model
 
 
-class DeformableModelBuilder(object):
+class DeformableModelBuilder(object, metaclass=abc.ABCMeta):
     r"""
     Abstract class with a set of functions useful to build a Deformable Model.
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def build(self, images, group=None, label=None):

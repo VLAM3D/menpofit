@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+
 import abc
 import numpy as np
 from menpo.image import Image
@@ -15,7 +15,7 @@ from .parametricfeatures import extract_parametric_features, weights
 from .regressionfunctions import regression, mlr
 
 
-class RegressorTrainer(object):
+class RegressorTrainer(object, metaclass=abc.ABCMeta):
     r"""
     An abstract base class for training regressors.
 
@@ -44,7 +44,6 @@ class RegressorTrainer(object):
         Defines the number of perturbations that will be applied to the
         training shapes.
     """
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, reference_shape, regression_type=mlr,
                  regression_features=None, noise_std=0.04, rotation=False,

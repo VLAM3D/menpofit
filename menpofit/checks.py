@@ -1,5 +1,6 @@
 import wrapt
 from menpofit.base import is_pyramid_on_features
+import collections
 
 
 # tests currently expect that all features automatically constrain landmarks
@@ -57,7 +58,7 @@ def check_list_callables(callables, n_callables, allow_single=True):
                              "(allow_single=False)")
     # must have a list by now
     for c in callables:
-        if not callable(c):
+        if not isinstance(c, collections.Callable):
             raise ValueError("All items must be callables")
     if len(callables) != n_callables:
         raise ValueError("List of callables must be {} "

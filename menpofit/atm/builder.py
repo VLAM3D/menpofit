@@ -1,4 +1,4 @@
-from __future__ import division
+
 
 from menpo.transform import Scale, PiecewiseAffine, ThinPlateSplines
 from menpo.feature import igo

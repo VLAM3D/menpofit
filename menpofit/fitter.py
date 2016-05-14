@@ -1,4 +1,4 @@
-from __future__ import division
+
 import abc
 from menpo.transform import AlignmentAffine, Scale, AlignmentSimilarity
 import numpy as np
@@ -8,11 +8,10 @@ from menpofit.base import is_pyramid_on_features, pyramid_of_feature_images, \
 from menpofit.fittingresult import MultilevelFittingResult
 
 
-class Fitter(object):
+class Fitter(object, metaclass=abc.ABCMeta):
     r"""
     Abstract interface that all :map:`Fitter` objects must implement.
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def _set_up(self, **kwargs):

@@ -28,10 +28,10 @@ from menpo.visualize.widgets.base import (_plot_figure, _plot_graph,
                                           _check_n_parameters,
                                           _raw_info_string_to_latex,
                                           _extract_groups_labels)
-from IPython.html.widgets import (FloatTextWidget, TextWidget, PopupWidget,
-                                  ContainerWidget, TabWidget, FloatSliderWidget,
-                                  RadioButtonsWidget, CheckboxWidget,
-                                  DropdownWidget, AccordionWidget, ButtonWidget)
+from ipywidgets import (FloatText, Text, 
+                                  Box, Tab, FloatSlider,
+                                  RadioButtons, Checkbox,
+                                  Dropdown, Accordion, Button)
 from IPython.display import display, clear_output
 import matplotlib.pylab as plt
 import numpy as np
@@ -222,10 +222,10 @@ def visualize_shape_model(shape_models, n_parameters=5,
     mode_dict = OrderedDict()
     mode_dict['Deformation'] = 1
     mode_dict['Vectors'] = 2
-    mode_wid = RadioButtonsWidget(values=mode_dict, description='Mode:',
+    mode_wid = RadioButtons(options=mode_dict, description='Mode:',
                                   value=1)
     mode_wid.on_trait_change(plot_function, 'value')
-    mean_wid = CheckboxWidget(value=False, description='Show mean shape')
+    mean_wid = Checkbox(value=False, description='Show mean shape')
     mean_wid.on_trait_change(plot_function, 'value')
 
     # controls mean shape checkbox visibility
@@ -247,7 +247,7 @@ def visualize_shape_model(shape_models, n_parameters=5,
                                         show_axes_default=True,
                                         toggle_show_default=True,
                                         toggle_show_visible=False)
-    axes_mode_wid = RadioButtonsWidget(values={'Image': 1, 'Point cloud': 2},
+    axes_mode_wid = RadioButtons(options={'Image': 1, 'Point cloud': 2},
                                        description='Axes mode:', value=1)
     axes_mode_wid.on_trait_change(plot_function, 'value')
     ch = list(figure_options_wid.children)
@@ -274,19 +274,19 @@ def visualize_shape_model(shape_models, n_parameters=5,
                 radio_str["Level {} (high)".format(l)] = l
             else:
                 radio_str["Level {}".format(l)] = l
-        level_wid = RadioButtonsWidget(values=radio_str,
+        level_wid = RadioButtons(options=radio_str,
                                        description='Pyramid:', value=0)
         level_wid.on_trait_change(update_widgets, 'value')
         level_wid.on_trait_change(plot_function, 'value')
         radio_children = [level_wid, mode_wid, mean_wid]
     else:
         radio_children = [mode_wid, mean_wid]
-    radio_wids = ContainerWidget(children=radio_children)
-    tmp_wid = ContainerWidget(children=[radio_wids, model_parameters_wid])
-    wid = TabWidget(children=[tmp_wid, figure_options_wid, info_wid,
+    radio_wids = Box(children=radio_children)
+    tmp_wid = Box(children=[radio_wids, model_parameters_wid])
+    wid = Tab(children=[tmp_wid, figure_options_wid, info_wid,
                               save_figure_wid])
     if popup:
-        wid = PopupWidget(children=[wid], button_text='Shape Model Menu')
+        wid = Box(children=[wid], button_text='Shape Model Menu')
 
     # display final widget
     display(wid)
@@ -535,17 +535,17 @@ def visualize_appearance_model(appearance_models, n_parameters=5,
                 radio_str["Level {} (high)".format(l)] = l
             else:
                 radio_str["Level {}".format(l)] = l
-        level_wid = RadioButtonsWidget(values=radio_str,
+        level_wid = RadioButtons(options=radio_str,
                                        description='Pyramid:', value=0)
         level_wid.on_trait_change(update_widgets, 'value')
         level_wid.on_trait_change(plot_function, 'value')
         tmp_children.insert(0, level_wid)
-    tmp_wid = ContainerWidget(children=tmp_children)
-    wid = TabWidget(children=[tmp_wid, channel_options_wid,
+    tmp_wid = Box(children=tmp_children)
+    wid = Tab(children=[tmp_wid, channel_options_wid,
                               landmark_options_wid, figure_options_wid,
                               info_wid, save_figure_wid])
     if popup:
-        wid = PopupWidget(children=[wid], button_text='Appearance Model Menu')
+        wid = Box(children=[wid], button_text='Appearance Model Menu')
 
     # display final widget
     display(wid)
@@ -873,7 +873,7 @@ def visualize_aam(aam, n_shape_parameters=5, n_appearance_parameters=5,
                                           MaskedImage))
 
     # create final widget
-    model_parameters_wid = ContainerWidget(
+    model_parameters_wid = Box(
         children=[shape_model_parameters_wid, appearance_model_parameters_wid])
     tmp_children = [model_parameters_wid]
     if n_levels > 1:
@@ -885,17 +885,17 @@ def visualize_aam(aam, n_shape_parameters=5, n_appearance_parameters=5,
                 radio_str["Level {} (high)".format(l)] = l
             else:
                 radio_str["Level {}".format(l)] = l
-        level_wid = RadioButtonsWidget(values=radio_str,
+        level_wid = RadioButtons(options=radio_str,
                                        description='Pyramid:', value=0)
         level_wid.on_trait_change(update_widgets, 'value')
         level_wid.on_trait_change(plot_function, 'value')
         tmp_children.insert(0, level_wid)
-    tmp_wid = ContainerWidget(children=tmp_children)
-    wid = TabWidget(children=[tmp_wid, channel_options_wid,
+    tmp_wid = Box(children=tmp_children)
+    wid = Tab(children=[tmp_wid, channel_options_wid,
                               landmark_options_wid, figure_options_wid,
                               info_wid, save_figure_wid])
     if popup:
-        wid = PopupWidget(children=[wid], button_text='AAM Menu')
+        wid = Box(children=[wid], button_text='AAM Menu')
 
     # display final widget
     display(wid)
@@ -1187,17 +1187,17 @@ def visualize_atm(atm, n_shape_parameters=5, parameters_bounds=(-3.0, 3.0),
                 radio_str["Level {} (high)".format(l)] = l
             else:
                 radio_str["Level {}".format(l)] = l
-        level_wid = RadioButtonsWidget(values=radio_str,
+        level_wid = RadioButtons(options=radio_str,
                                        description='Pyramid:', value=0)
         level_wid.on_trait_change(update_widgets, 'value')
         level_wid.on_trait_change(plot_function, 'value')
         tmp_children.insert(0, level_wid)
-    tmp_wid = ContainerWidget(children=tmp_children)
-    wid = TabWidget(children=[tmp_wid, channel_options_wid,
+    tmp_wid = Box(children=tmp_children)
+    wid = Tab(children=[tmp_wid, channel_options_wid,
                               landmark_options_wid, figure_options_wid,
                               info_wid, save_figure_wid])
     if popup:
-        wid = PopupWidget(children=[wid], button_text='ATM Menu')
+        wid = Box(children=[wid], button_text='ATM Menu')
 
     # display final widget
     display(wid)
@@ -1312,7 +1312,7 @@ def visualize_fitting_results(fitting_results, figure_size=(7, 7), popup=False,
         figure_id = plt.figure(save_figure_wid.figure_id.number)
 
         # plot errors curve
-        plt.plot(range(len(fitting_results[im].errors())),
+        plt.plot(list(range(len(fitting_results[im].errors()))),
                  fitting_results[im].errors(), '-bo')
         plt.gca().set_xlim(0, len(fitting_results[im].errors())-1)
         plt.xlabel('Iteration')
@@ -1354,7 +1354,7 @@ def visualize_fitting_results(fitting_results, figure_size=(7, 7), popup=False,
             all_displacements = fitting_results[im].displacements()
             d_curve = [iteration_displacements[d_type]
                        for iteration_displacements in all_displacements]
-        plt.plot(range(len(d_curve)), d_curve, '-bo')
+        plt.plot(list(range(len(d_curve))), d_curve, '-bo')
         plt.gca().set_xlim(0, len(d_curve)-1)
         plt.grid("on")
         plt.xlabel('Iteration')
@@ -1539,12 +1539,12 @@ def visualize_fitting_results(fitting_results, figure_size=(7, 7), popup=False,
     error_type_values['Point-to-point Normalized Mean Error'] = 'me_norm'
     error_type_values['Point-to-point Mean Error'] = 'me'
     error_type_values['RMS Error'] = 'rmse'
-    error_type_wid = RadioButtonsWidget(values=error_type_values,
+    error_type_wid = RadioButtons(options=error_type_values,
                                         value='me_norm',
                                         description='Error type')
     error_type_wid.on_trait_change(update_info, 'value')
-    plot_ced_but = ButtonWidget(description='Plot CED', visible=show_ced)
-    error_wid = ContainerWidget(children=[error_type_wid, plot_ced_but])
+    plot_ced_but = Button(description='Plot CED', visible=show_ced)
+    error_wid = Box(children=[error_type_wid, plot_ced_but])
 
     # define function that updates options' widgets state
     def update_widgets(name, value):
@@ -1567,8 +1567,8 @@ def visualize_fitting_results(fitting_results, figure_size=(7, 7), popup=False,
             iter_str=iter_str)
 
     # Create final widget
-    options_wid = TabWidget(children=[channel_options_wid, figure_options_wid])
-    result_wid = TabWidget(children=[final_result_wid, iterations_wid])
+    options_wid = Tab(children=[channel_options_wid, figure_options_wid])
+    result_wid = Tab(children=[final_result_wid, iterations_wid])
     result_wid.on_trait_change(plot_function, 'selected_index')
     if n_fitting_results > 1:
         # image selection slider
@@ -1600,10 +1600,10 @@ def visualize_fitting_results(fitting_results, figure_size=(7, 7), popup=False,
                 image_number_wid.children[1].children[1].children[0].children[1].value = True
 
         # final widget
-        tab_wid = TabWidget(children=[info_wid, result_wid, options_wid,
+        tab_wid = Tab(children=[info_wid, result_wid, options_wid,
                                       error_wid, save_figure_wid])
         tab_wid.on_trait_change(save_fig_tab_fun, 'selected_index')
-        wid = ContainerWidget(children=[image_number_wid, tab_wid])
+        wid = Box(children=[image_number_wid, tab_wid])
         if show_ced:
             tab_titles = ['Info', 'Result', 'Options', 'CED', 'Save figure']
         else:
@@ -1615,14 +1615,14 @@ def visualize_fitting_results(fitting_results, figure_size=(7, 7), popup=False,
         plot_ced_but.visible = False
 
         # final widget
-        wid = TabWidget(children=[info_wid, result_wid, options_wid, error_wid,
+        wid = Tab(children=[info_wid, result_wid, options_wid, error_wid,
                                   save_figure_wid])
         tab_titles = ['Image info', 'Result', 'Options', 'Error type',
                       'Save figure']
         button_title = 'Fitting Result Menu'
     # create popup widget if asked
     if popup:
-        wid = PopupWidget(children=[wid], button_text=button_title)
+        wid = Box(children=[wid], button_text=button_title)
 
     # invoke plot_ced widget
     def plot_ced_fun(name):
@@ -1841,13 +1841,13 @@ def plot_ced(errors, figure_size=(9, 5), popup=False, error_type='me_norm',
 
     # create options widgets
     # x label, y label, title container
-    x_label = TextWidget(description='Horizontal axis label',
+    x_label = Text(description='Horizontal axis label',
                          value=x_label_initial_value)
-    y_label = TextWidget(description='Vertical axis label',
+    y_label = Text(description='Vertical axis label',
                          value='Images Proportion')
-    title = TextWidget(description='Figure title',
+    title = Text(description='Figure title',
                        value='Cumulative error ditribution')
-    labels_wid = ContainerWidget(children=[x_label, y_label, title])
+    labels_wid = Box(children=[x_label, y_label, title])
 
     # figure size
     fig = figure_options_two_scales(plot_function, x_scale_default=1.,
@@ -1860,44 +1860,44 @@ def plot_ced(errors, figure_size=(9, 5), popup=False, error_type='me_norm',
                                     show_axes_visible=False,
                                     toggle_show_visible=False)
     # fontsizes
-    labels_fontsize = FloatTextWidget(description='Labels fontsize', value=12.)
-    axes_fontsize = FloatTextWidget(description='Axes fontsize', value=12.)
-    fontsize_wid = ContainerWidget(children=[labels_fontsize, axes_fontsize])
+    labels_fontsize = FloatText(description='Labels fontsize', value=12.)
+    axes_fontsize = FloatText(description='Axes fontsize', value=12.)
+    fontsize_wid = Box(children=[labels_fontsize, axes_fontsize])
 
     # checkboxes
-    grid_visible = CheckboxWidget(description='Grid visible', value=False)
+    grid_visible = Checkbox(description='Grid visible', value=False)
     gridlinestyle_dict = OrderedDict()
     gridlinestyle_dict['solid'] = '-'
     gridlinestyle_dict['dashed'] = '--'
     gridlinestyle_dict['dash-dot'] = '-.'
     gridlinestyle_dict['dotted'] = ':'
-    gridlinestyle = DropdownWidget(values=gridlinestyle_dict,
+    gridlinestyle = Dropdown(options=gridlinestyle_dict,
                                    value=':',
                                    description='Grid style', disabled=False)
 
     def gridlinestyle_visibility(name, value):
         gridlinestyle.disabled = not value
     grid_visible.on_trait_change(gridlinestyle_visibility, 'value')
-    legend_visible = CheckboxWidget(description='Legend visible', value=True)
-    checkbox_wid = ContainerWidget(children=[grid_visible, gridlinestyle,
+    legend_visible = Checkbox(description='Legend visible', value=True)
+    checkbox_wid = Box(children=[grid_visible, gridlinestyle,
                                              legend_visible])
 
     # container of various options
-    tmp_various_wid = ContainerWidget(children=[fontsize_wid, checkbox_wid])
-    various_wid = ContainerWidget(children=[fig, tmp_various_wid])
+    tmp_various_wid = Box(children=[fontsize_wid, checkbox_wid])
+    various_wid = Box(children=[fig, tmp_various_wid])
 
     # axis limits
-    y_axis_limit = FloatSliderWidget(min=0., max=1.1, step=0.1,
+    y_axis_limit = FloatSlider(min=0., max=1.1, step=0.1,
                                      description='Y axis limit', value=1.)
-    x_axis_limit = FloatSliderWidget(min=error_range[0] + error_range[2],
+    x_axis_limit = FloatSlider(min=error_range[0] + error_range[2],
                                      max=error_range[1],
                                      step=error_range[2],
                                      description='X axis limit',
                                      value=x_axis_limit_initial_value)
-    axis_limits_wid = ContainerWidget(children=[x_axis_limit, y_axis_limit])
+    axis_limits_wid = Box(children=[x_axis_limit, y_axis_limit])
 
     # accordion widget
-    figure_wid = AccordionWidget(children=[axis_limits_wid, labels_wid,
+    figure_wid = Accordion(children=[axis_limits_wid, labels_wid,
                                            various_wid])
     figure_wid.set_title(0, 'Axes Limits')
     figure_wid.set_title(1, 'Labels and Title')
@@ -1929,12 +1929,12 @@ def plot_ced(errors, figure_size=(9, 5), popup=False, error_type='me_norm',
     axes_fontsize.on_trait_change(plot_function, 'value')
 
     # create final widget
-    wid = TabWidget(children=[figure_wid, plot_options_wid,
+    wid = Tab(children=[figure_wid, plot_options_wid,
                               save_figure_wid])
 
     # create popup widget if asked
     if popup:
-        wid = PopupWidget(children=[wid], button_text='CED Menu')
+        wid = Box(children=[wid], button_text='CED Menu')
 
     # display final widget
     display(wid)

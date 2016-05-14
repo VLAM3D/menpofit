@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+
 import numpy as np
 from menpo.feature import sparse_hog
 from menpo.visualize import print_dynamic, progress_bar_str
@@ -8,6 +8,7 @@ from menpofit.base import create_pyramid, build_sampling_grid
 from menpofit.builder import (DeformableModelBuilder, build_shape_model,
                               normalization_wrt_reference_shape)
 from .classifier import linear_svm_lr
+import collections
 
 
 class CLMBuilder(DeformableModelBuilder):
@@ -344,7 +345,7 @@ def check_classifier_trainers(classifier_trainers, n_levels):
     else:
         raise ValueError(str_error)
     for classifier in classifier_list:
-        if not callable(classifier):
+        if not isinstance(classifier, collections.Callable):
             raise ValueError(str_error)
     return classifier_list
 

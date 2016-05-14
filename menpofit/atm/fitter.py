@@ -1,4 +1,4 @@
-from __future__ import division
+
 
 from menpofit.fitter import MultilevelFitter
 from menpofit.fittingresult import AMMultilevelFittingResult

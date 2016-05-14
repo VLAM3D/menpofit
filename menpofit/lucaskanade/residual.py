@@ -29,7 +29,7 @@ from menpo.math import log_gabor
 from menpo.image import MaskedImage
 
 
-class Residual(object):
+class Residual(object, metaclass=abc.ABCMeta):
     """
     An abstract base class for calculating the residual between two images
     within the Lucas-Kanade algorithm. The classes were designed
@@ -37,7 +37,6 @@ class Residual(object):
     guarantee is made that calling methods on these subclasses will generate
     correct results.
     """
-    __metaclass__ = abc.ABCMeta
 
     @property
     def error(self):
@@ -260,7 +259,7 @@ class GaborFourier(Residual):
 
         # compute FFT over each channel, parameter and dimension
         # fft_sdi:  height  x  width  x  n_channels  x  n_params
-        fft_axes = range(image.n_dims)
+        fft_axes = list(range(image.n_dims))
         fft_sdi = fftshift(fftn(sdi_img.pixels, axes=fft_axes), axes=fft_axes)
 
         # ToDo: Note that, fft_sdi is rectangular, i.e. is not define in
@@ -299,7 +298,7 @@ class GaborFourier(Residual):
 
         # compute FFT error image
         # fft_error_img:  height  x  width  x  n_channels
-        fft_axes = range(IWxp.n_dims)
+        fft_axes = list(range(IWxp.n_dims))
         fft_error_img = fftshift(fftn(error_img, axes=fft_axes),
                                  axes=fft_axes)
 
